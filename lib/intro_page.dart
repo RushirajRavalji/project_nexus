@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_nexus/home_page.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -28,10 +29,12 @@ class IntroPage extends StatelessWidget {
               padding: EdgeInsets.all(20.0), // Add padding to the bottom
               child: TextButton(
                 onPressed: () {
-                  // // Add your action here
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(content: Text("TextButton Pressed")),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                  );
                 },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero, // Remove default padding
@@ -51,7 +54,7 @@ class IntroPage extends StatelessWidget {
                   ),
                   alignment: Alignment.center, // Center the text
                   child: Text(
-                    "Click Me",
+                    "Let's Go -->",
                     style: TextStyle(
                       color: Colors.grey, // Text color
                       fontSize: 16.0, // Text size
