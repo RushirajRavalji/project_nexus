@@ -1,117 +1,160 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart'; // Importing the Flutter Material Design package for UI elements like AppBar, buttons, etc.
+import 'package:shared_preferences/shared_preferences.dart'; // Importing SharedPreferences to persist data locally on the device.
 
 void main() {
+  // The entry point of the Flutter app. It runs the MyTodoApp widget.
   runApp(const MyTodoApp());
 }
 
+// MyTodoApp widget, which is the root widget of the app. It extends StatelessWidget as it does not have mutable state.
 class MyTodoApp extends StatelessWidget {
-  const MyTodoApp({super.key});
+  const MyTodoApp(
+      {super.key}); // Constructor with a key parameter, used for widget identification.
 
   @override
   Widget build(BuildContext context) {
+    // The build method constructs the widget tree.
     return MaterialApp(
-      home: const MyTodoHome(),
-      debugShowCheckedModeBanner: false,
+      // MaterialApp widget is the root of the application that provides material design visual structure.
+      home: const MyTodoHome(), // Setting MyTodoHome widget as the home screen.
+      debugShowCheckedModeBanner:
+          false, // Disables the debug banner in the app.
       theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
+        // Custom theme for the app.
+        brightness: Brightness.dark, // Dark mode theme for the app.
+        scaffoldBackgroundColor: Colors
+            .black, // Sets the background color of the scaffold (the main app screen).
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: Colors.white, fontFamily: 'Monospace'),
+          bodyMedium: TextStyle(
+              color: Colors.white,
+              fontFamily:
+                  'Monospace'), // Text theme with white text and monospace font.
         ),
       ),
     );
   }
 }
 
+// Stateful widget to manage the state of the Todo list.
 class MyTodoHome extends StatefulWidget {
-  const MyTodoHome({super.key});
+  const MyTodoHome({super.key}); // Constructor with a key parameter.
 
   @override
-  State<MyTodoHome> createState() => _MyTodoHomeState();
+  State<MyTodoHome> createState() =>
+      _MyTodoHomeState(); // Creates the mutable state for the widget.
 }
 
+// _MyTodoHomeState is the state class for MyTodoHome.
 class _MyTodoHomeState extends State<MyTodoHome> {
-  List<String> todoList = [];
-  final TextEditingController _controller = TextEditingController();
+  List<String> todoList = []; // List to store the todo items.
+  final TextEditingController _controller =
+      TextEditingController(); // Controller to manage the text input field.
 
   @override
   void initState() {
     super.initState();
-    _loadTodos();
+    _loadTodos(); // Load stored todo items when the app starts.
   }
 
+  // Method to load the todo list from shared preferences.
   Future<void> _loadTodos() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences
+        .getInstance(); // Get the shared preferences instance.
     setState(() {
-      todoList = prefs.getStringList('todos') ?? [];
+      todoList = prefs.getStringList('todos') ??
+          []; // Retrieve the todo list stored under the key 'todos'. If not found, initialize an empty list.
     });
   }
 
+  // Method to save the todo list to shared preferences.
   Future<void> _saveTodos() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('todos', todoList);
+    final prefs = await SharedPreferences
+        .getInstance(); // Get the shared preferences instance.
+    await prefs.setStringList(
+        'todos', todoList); // Save the todo list as a string list.
   }
 
+  // Method to add a new todo to the list.
   void addTodo() {
-    if (_controller.text.trim().isEmpty) return;
+    if (_controller.text.trim().isEmpty)
+      return; // If the input is empty, do nothing.
     setState(() {
-      todoList.add(_controller.text.trim());
+      todoList.add(
+          _controller.text.trim()); // Add the trimmed input to the todo list.
     });
-    _saveTodos();
-    _controller.clear();
+    _saveTodos(); // Save the updated todo list to shared preferences.
+    _controller.clear(); // Clear the text input field.
   }
 
+  // Method to delete a todo from the list.
   void deleteTodo(int index) {
     setState(() {
-      todoList.removeAt(index);
+      todoList.removeAt(index); // Remove the todo item at the specified index.
     });
-    _saveTodos();
+    _saveTodos(); // Save the updated todo list to shared preferences after deletion.
   }
 
   @override
   Widget build(BuildContext context) {
+    // The build method constructs the widget tree for the UI.
     return Scaffold(
+      // Scaffold provides a basic material design layout structure with AppBar, body, and floating button.
       appBar: AppBar(
         title: const Text(
-          "MyTodo App",
-          style: TextStyle(fontFamily: 'Monospace', fontSize: 22),
+          "MyTodo App", // The title displayed in the app bar.
+          style: TextStyle(
+              fontFamily: 'Monospace',
+              fontSize: 22), // Styling the title with monospace font.
         ),
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        elevation: 0,
+        backgroundColor: Colors.black, // Set the app bar color to black.
+        centerTitle: true, // Centers the title in the app bar.
+        elevation: 0, // Removes shadow/elevation from the app bar.
       ),
       body: Column(
+        // Column widget arranges its children vertically.
         children: [
           Expanded(
+            // Expanded widget ensures that the list takes up the remaining space.
             child: todoList.isEmpty
                 ? const Center(
+                    // If the todo list is empty, show a message prompting the user to add a task.
                     child: Text(
-                      "No tasks yet. Add one!",
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                      "No tasks yet. Add one!", // Display text for an empty todo list.
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16), // Style the text in grey color.
                     ),
                   )
                 : ListView.builder(
-                    itemCount: todoList.length,
+                    // ListView.builder creates a scrollable list of todos dynamically.
+                    itemCount:
+                        todoList.length, // The number of items in the list.
                     itemBuilder: (context, index) {
+                      // Builds each item in the list dynamically.
                       return Card(
-                        color: Colors.grey[900],
+                        color: Colors.grey[900], // Card background color.
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
+                            horizontal: 10,
+                            vertical: 5), // Margin around the card.
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(
+                              10), // Rounded corners for the card.
                         ),
                         child: ListTile(
                           title: Text(
-                            todoList[index],
+                            todoList[
+                                index], // Display the todo item at the specified index.
                             style: const TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Monospace',
+                              color: Colors.white, // White text color.
+                              fontFamily:
+                                  'Monospace', // Monospace font for the todo text.
                             ),
                           ),
                           trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => deleteTodo(index),
+                            icon: const Icon(Icons.delete,
+                                color: Colors.red), // A red delete icon.
+                            onPressed: () => deleteTodo(
+                                index), // Delete the todo when the icon is pressed.
                           ),
                         ),
                       );
@@ -121,43 +164,49 @@ class _MyTodoHomeState extends State<MyTodoHome> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddTodoDialog(context),
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.add, color: Colors.black),
+        onPressed: () =>
+            _showAddTodoDialog(context), // Show the dialog to add a new todo.
+        backgroundColor: Colors.white, // Floating button background color.
+        child: const Icon(Icons.add,
+            color: Colors.black), // Add icon inside the floating button.
       ),
     );
   }
 
+  // Method to show the dialog to add a new todo item.
   void _showAddTodoDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.grey[900],
+        backgroundColor:
+            Colors.grey[900], // Set the background color of the dialog.
         title: const Text(
-          "Add New Task",
+          "Add New Task", // Dialog title to prompt user to add a new task.
           style: TextStyle(color: Colors.white, fontFamily: 'Monospace'),
         ),
         content: TextField(
-          controller: _controller,
+          controller: _controller, // Assign the text field controller.
           style: const TextStyle(color: Colors.white, fontFamily: 'Monospace'),
           decoration: const InputDecoration(
-            hintText: "Enter task here...",
-            hintStyle: TextStyle(color: Colors.grey),
+            hintText: "Enter task here...", // Hint text inside the input field.
+            hintStyle: TextStyle(color: Colors.grey), // Hint text color.
           ),
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(
+                context), // Dismiss the dialog when "Cancel" is pressed.
             child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
           ),
           ElevatedButton(
             onPressed: () {
-              addTodo();
-              Navigator.pop(context);
+              addTodo(); // Add the new todo when the "Add" button is pressed.
+              Navigator.pop(
+                  context); // Dismiss the dialog after adding the todo.
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
             child: const Text(
-              "Add",
+              "Add", // Text for the Add button.
               style: TextStyle(color: Colors.black),
             ),
           ),
