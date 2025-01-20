@@ -20,10 +20,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text(
+          'To-do',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.black,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pop(context); // Go back to the previous page
           },
@@ -35,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "H O M E  P A G E",
+              "H O M E   P A G E",
               style: TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 20),
@@ -55,12 +61,12 @@ class _HomePageState extends State<HomePage> {
             label: 'Favorites',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.person),
+            label: 'About',
           ),
         ],
         backgroundColor: Colors.black,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: const Color.fromARGB(255, 140, 102, 228),
         unselectedItemColor: Colors.white,
       ),
     );
