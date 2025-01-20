@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_nexus/home_page.dart';
+import 'package:project_nexus/main.screen.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -32,7 +32,7 @@ class IntroPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainScreen(),
                     ),
                   );
                 },

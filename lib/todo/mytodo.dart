@@ -215,3 +215,15 @@ class _MyTodoHomeState extends State<MyTodoHome> {
     );
   }
 }
+
+
+// Explanation Summary:
+// Imports: The code uses the flutter/material.dart package for UI components and the shared_preferences package to store and retrieve data locally.
+// Main Function: The entry point of the app, where runApp() initializes MyTodoApp.
+// MyTodoApp: This is a stateless widget that defines the app's UI and theme, including the dark background and monospace text style.
+// MyTodoHome: This is a stateful widget to manage the todo list and handle user interactions.
+// State Management: State<MyTodoHome> and _MyTodoHomeState manage the todo list using setState to trigger UI updates.
+// Persistence: SharedPreferences is used to load and save the todo list to local storage, ensuring that data is persisted even if the app is closed.
+// Add/Delete Todo: The methods addTodo() and deleteTodo() update the todo list and save the changes to shared preferences.
+// UI Components: The app uses an AppBar, a list of todo items (ListView), and floating action buttons to add and delete tasks. It also shows a dialog for adding new tasks.
+// This code is a simple Flutter To-Do app that saves the list of tasks locally on the device, allowing the user to add and delete tasks, even after the app is closed.
