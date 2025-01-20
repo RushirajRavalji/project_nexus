@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_nexus/todo/mytodo.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,17 +37,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "H O M E   P A G E",
-              style: TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
+      body: Container(
+        child: MyTodoApp(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
