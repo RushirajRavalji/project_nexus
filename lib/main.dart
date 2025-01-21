@@ -1,12 +1,19 @@
-import 'package:flutter/material.dart ';
+import 'package:flutter/material.dart';
 import 'package:project_nexus/intro_page.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(nexus());
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  ).then(
+    (fn) {
+      runApp(Nexus());
+    },
+  );
 }
 
-class nexus extends StatelessWidget {
-  const nexus({super.key});
+class Nexus extends StatelessWidget {
+  const Nexus({super.key});
 
   @override
   Widget build(BuildContext context) {
